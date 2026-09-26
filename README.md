@@ -120,7 +120,3 @@ ClientesAPI/
 ├── appsettings.json     # Configuración de la aplicación
 ├── Program.vb           # Punto de entrada
 └── README.md            # Este archivo
-```
-
-## Licencia
-Este proyecto está disponible bajo licencia MIT.
