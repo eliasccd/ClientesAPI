@@ -75,12 +75,13 @@ Si utilizas una instancia diferente, modifica la cadena en `appsettings.json`:
 
 ## 5. Ejecución y Pruebas
 Para ejecutar la aplicación:
-Si la página no se abre automáticamente al ejecutar el proyecto, accede manualmente a esta url.
+Si la página no se abre automáticamente al ejecutar el proyecto, accede manualmente a esta url. De acuerdo al localhost que aparezca solo agregar el /swagger/index.html al final de la url siendo el puerto 56582 o 61260.
    ```
    https://localhost:56582/swagger/index.html
+   https://localhost:61260/swagger/index.html
+
    ```
 Debido a que Visual Studio a veces intenta resolver la ruta web antes de que el servidor local de desarrollo se inicialice por completo, es posible que la página inicial no cargue de forma automática al presionar "Ejecutar".
-
 
 ## Endpoints disponibles
 
