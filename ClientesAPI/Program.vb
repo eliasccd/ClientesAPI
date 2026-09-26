@@ -1,34 +1,60 @@
 Imports ClientesAPI.Data
 Imports ClientesAPI.Repositories
 Imports ClientesAPI.Services
+Imports Microsoft.AspNetCore.Builder
 Imports Microsoft.EntityFrameworkCore
+Imports Microsoft.Extensions.Configuration
+Imports Microsoft.Extensions.DependencyInjection
+Imports Microsoft.Extensions.Hosting
 
-Module Program
-    Sub Main(args As String())
-        Dim builder = WebApplication.CreateBuilder(args)
+Public Class Program
+    Public Shared Sub Main(args As String())
+        Try
+            Dim builder = WebApplication.CreateBuilder(args)
 
-        builder.Services.AddControllers()
-        builder.Services.AddEndpointsApiExplorer()
-        builder.Services.AddSwaggerGen()
+            ' Agregar Swagger
+            builder.Services.AddSwaggerGen()
 
-        Dim connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        builder.Services.AddDbContext(Of ApplicationDbContext)(Sub(options)
-            options.UseSqlServer(connectionString)
-        End Sub)
+            ' Agregar Controllers
+            builder.Services.AddControllers()
 
-        builder.Services.AddScoped(GetType(IClienteRepository), GetType(ClienteRepository))
-        builder.Services.AddScoped(GetType(IClienteService), GetType(ClienteService))
+            ' Agregar servicios
+            builder.Services.AddEndpointsApiExplorer()
 
-        Dim app = builder.Build()
+            ' Agregar DbContext
+            Dim connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+            If String.IsNullOrEmpty(connectionString) Then
+                Console.WriteLine("ERROR: Connection string no encontrada en appsettings.json")
+            End If
 
-        If app.Environment.IsDevelopment() Then
-            app.UseSwagger()
-            app.UseSwaggerUI()
-        End If
+            builder.Services.AddDbContext(Of ApplicationDbContext)(
+                Sub(options)
+                    options.UseSqlServer(connectionString)
+                End Sub)
 
-        app.UseHttpsRedirection()
-        app.UseAuthorization()
-        app.MapControllers()
-        app.Run()
+            ' Agregar dependencias
+            builder.Services.AddScoped(GetType(IClienteRepository), GetType(ClienteRepository))
+            builder.Services.AddScoped(GetType(IClienteService), GetType(ClienteService))
+
+            ' Crear la aplicación
+            Dim app = builder.Build()
+
+            ' Habilitar Swagger en desarrollo
+            If app.Environment.IsDevelopment() Then
+                app.UseDeveloperExceptionPage()
+                app.UseSwagger()
+                app.UseSwaggerUI()
+            End If
+
+            app.UseHttpsRedirection()
+            app.MapControllers()
+
+            Console.WriteLine("✓ Iniciando aplicación...")
+            app.Run()
+
+        Catch ex As Exception
+            Console.WriteLine($"✗ ERROR CRÍTICO: {ex.Message}")
+            Console.WriteLine($"Stack Trace: {ex.StackTrace}")
+        End Try
     End Sub
-End Module
+End Class
