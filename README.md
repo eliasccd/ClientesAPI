@@ -75,15 +75,12 @@ Si utilizas una instancia diferente, modifica la cadena en `appsettings.json`:
 
 ## 5. Ejecución y Pruebas
 Para ejecutar la aplicación:
-
-1. En Visual Studio, asegúrate de seleccionar el perfil **"ClientesAPI"** en la barra superior.
-2. Presiona **F5** o haz clic en "Ejecutar".
-3. La aplicación se iniciará y Swagger debería abrirse automáticamente en:
+Si la página no se abre automáticamente al ejecutar el proyecto, accede manualmente a esta url.
    ```
-   https://localhost:62284/swagger/index.html
+   https://localhost:56582/swagger/index.html
    ```
+Debido a que Visual Studio a veces intenta resolver la ruta web antes de que el servidor local de desarrollo se inicialice por completo, es posible que la página inicial no cargue de forma automática al presionar "Ejecutar".
 
-Si la página no se abre automáticamente, accede manualmente a la dirección anterior.
 
 ## Endpoints disponibles
 
@@ -94,18 +91,6 @@ Una vez que Swagger esté abierto, podrás interactuar con los siguientes endpoi
 - **POST** `/api/clientes` - Crea un nuevo cliente
 - **PUT** `/api/clientes/{id}` - Actualiza un cliente existente
 - **DELETE** `/api/clientes/{id}` - Elimina un cliente
-
-## Solución de problemas
-
-### La API no se conecta a SQL Server
-- Verifica que el servicio **SQL Server (SQLEXPRESS)** esté iniciado.
-- Comprueba que la base de datos `EmpresaDB` existe en SQL Server Management Studio.
-- Asegúrate de que la cadena de conexión en `appsettings.json` coincida con tu instancia de SQL Server.
-
-### Swagger no carga correctamente
-- Limpia la caché del navegador (Ctrl+Shift+Supr).
-- Reconstruye la solución: **Build > Rebuild Solution**.
-- Reinicia Visual Studio si persiste el problema.
 
 ## Estructura del Proyecto
 
